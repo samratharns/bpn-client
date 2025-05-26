@@ -19,6 +19,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
+// Add API base URL from environment variable
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 function App() {
   const [notifications, setNotifications] = useState([]); // Changed to array for history
   const [token, setToken] = useState('');
@@ -37,7 +40,7 @@ function App() {
       if (fcmToken) {
         setToken(fcmToken);
         // Send token to backend
-        await axios.post('https://bpn-api.samratjaiswal.com/register-token', { token: fcmToken });
+        await axios.post(`${API_BASE_URL}/register-token`, { token: fcmToken });
       }
     };
     getToken();
@@ -62,7 +65,7 @@ function App() {
 
   const handleSubscribe = async (topic) => {
     try {
-      await axios.post('https://bpn-api.samratjaiswal.com/subscribe', { token, topic });
+      await axios.post(`${API_BASE_URL}/subscribe`, { token, topic });
       setSubscribedTopics([...subscribedTopics, topic]);
       alert(`Subscribed to ${topic} successfully!`);
     } catch (error) {
@@ -73,7 +76,7 @@ function App() {
 
   const handleUnsubscribe = async (topic) => {
     try {
-      await axios.post('https://bpn-api.samratjaiswal.com/unsubscribe', { token, topic });
+      await axios.post(`${API_BASE_URL}/unsubscribe`, { token, topic });
       setSubscribedTopics(subscribedTopics.filter(t => t !== topic));
       alert(`Unsubscribed from ${topic} successfully!`);
     } catch (error) {
@@ -85,7 +88,7 @@ function App() {
   const handleSendNotification = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://bpn-api.samratjaiswal.com/send-notification', {
+      await axios.post(`${API_BASE_URL}/send-notification`, {
         topic: notificationData.targetTopic,
         title: notificationData.title,
         body: notificationData.body
