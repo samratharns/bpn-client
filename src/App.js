@@ -37,7 +37,7 @@ function App() {
       if (fcmToken) {
         setToken(fcmToken);
         // Send token to backend
-        await axios.post('http://localhost:3001/register-token', { token: fcmToken });
+        await axios.post('https://bpn-api.samratjaiswal.com/register-token', { token: fcmToken });
       }
     };
     getToken();
@@ -62,7 +62,7 @@ function App() {
 
   const handleSubscribe = async (topic) => {
     try {
-      await axios.post('http://localhost:3001/subscribe', { token, topic });
+      await axios.post('https://bpn-api.samratjaiswal.com/subscribe', { token, topic });
       setSubscribedTopics([...subscribedTopics, topic]);
       alert(`Subscribed to ${topic} successfully!`);
     } catch (error) {
@@ -73,7 +73,7 @@ function App() {
 
   const handleUnsubscribe = async (topic) => {
     try {
-      await axios.post('http://localhost:3001/unsubscribe', { token, topic });
+      await axios.post('https://bpn-api.samratjaiswal.com/unsubscribe', { token, topic });
       setSubscribedTopics(subscribedTopics.filter(t => t !== topic));
       alert(`Unsubscribed from ${topic} successfully!`);
     } catch (error) {
@@ -85,7 +85,7 @@ function App() {
   const handleSendNotification = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3001/send-notification', {
+      await axios.post('https://bpn-api.samratjaiswal.com/send-notification', {
         topic: notificationData.targetTopic,
         title: notificationData.title,
         body: notificationData.body
