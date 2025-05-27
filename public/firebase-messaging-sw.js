@@ -17,8 +17,8 @@ messaging.onBackgroundMessage(function(payload) {
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    icon: '/logo192.png',
-    badge: '/logo192.png',
+    // icon: '/logo192.png',
+    // badge: '/logo192.png',
     vibrate: [200, 100, 200],
     tag: 'notification-' + Date.now(), // Unique tag for each notification
     requireInteraction: true, // Keep notification visible until user interacts
